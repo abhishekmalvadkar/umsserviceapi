@@ -37,3 +37,35 @@
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
+
+### Backend changes
+
+* create new POST endpoint /api/ums/urls/create-link
+* Request Headers
+
+```shell
+userid : 1
+roleid : 3
+device : web
+```
+* Request Payload
+
+```json
+{
+  "title" : "Database Exploration Checklist for Understanding a New Domain",
+  "originalUrl" : "https://abhishekmalvadkar.netlify.app/database-exploration-checklist-for-understanding-a-new-domain/",
+  "slug" : "DbExploration"
+}
+```
+* Response Payload
+
+```json
+{
+  "data": {
+    "id": 1
+  },
+  "message": "Created successfully",
+  "code": 201,
+  "status": "CREATED"
+}
+```
