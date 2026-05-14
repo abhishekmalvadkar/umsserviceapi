@@ -2,7 +2,7 @@
 
 ## Actors
 
-* User
+* Customer
 * Admin
 * System
 
@@ -22,6 +22,8 @@
   * "Please enter a valid URL (e.g. https://example.com)"
 * User should not be able to enter more than 2048 characters for original link and original link input box should show
   how many character used and how many remaining (e.g 2/2048)
+* User should not be able to enter more than 128 characters for title and title input box should show
+  how many character used and how many remaining (e.g 4/128)
 
 ## My Short URLs
 
