@@ -40,7 +40,7 @@
 
 ### Backend changes
 
-* create new POST endpoint /api/ums/urls/create-link
+* create new POST endpoint /api/ums/urls/create-url
 * Request Headers
 
 ```shell
