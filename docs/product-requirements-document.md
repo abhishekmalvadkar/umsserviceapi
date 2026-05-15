@@ -31,16 +31,16 @@
 * This will contain below columns in table format:
   * Short Url
     * e.g "https://ourdomain.com/slug..."
-    * Will show only first 10 characters and full short url will be shown on tooltip on hover
+    * Will show only first 20 characters and full short url will be shown on tooltip on hover
+  * Title
+    * e.g: "My Short URL Title..."
+    * Will show only first 20 characters and full title will be shown on tooltip on hover
   * Original Url
-    * It should show two things in two lines of single column
-      * Title
-      * Original Url
-    * Both should show only first 10 characters and full original url or title will be shown on tooltip on hover
-    * e.g:
-      * "My Short URL Title...
-        https://original-url.com...
-        "
+    * e.g: "https://original-url.com..."
+    * Will show only first 20 characters and full original url will be shown on tooltip on hover
+  * Slug
+    * e.g "DbExploration"
+    * Will show only first 20 characters and full slug will be shown on tooltip on hover
   * Status
     * e.g (Active , Inactive)
     * Active should show with white text and green background
@@ -48,12 +48,22 @@
   * Created On
     * e.g "5 Jan 2026 11:33 AM"
   * Actions
-    * crossed eye icon with tooltip "Deactivate url"
-      * Once user click on it then show toaster with message:
-        * "Url deactivated successfully!"
-      * if url is deactivated then it should eye icon with tooltip "Activate url"
-        * Once user click on it then show toaster with message:
-        * "Url activated successfully!"
-    * copy icon with tooltip "Copy Url"
+    * copy icon with tooltip "Copy Short Url"
       * When user click on that copy icon then toaster should show message:
-        * "Url copied successfully!"
+        * "Short Url copied successfully!"
+
+## Update URLs
+
+* Below url list table's columns should be inline editable with given role permission
+  * Title
+    * Admin
+    * Customer
+  * Original Url
+    * Admin
+    * Customer
+  * Slug
+    * Admin
+    * Customer
+  * Status
+    * Admin
+    * Customer
