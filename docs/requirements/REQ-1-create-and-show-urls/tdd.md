@@ -16,6 +16,38 @@
   * System : Responsible to automate things
   * Admin : Responsible for everything with all permissions
   * Customer : Responsible to manage URLs with only required permissions
+* Create menu table with below columns:
+  * id : bigint (PK, AI)
+  * name : varchar(45) (NN)
+* Insert below menus:
+  * My Short URLs
+* Create role_menu table with below columns:
+  * id : bigint (PK, AI)
+  * role_id : bigint (FK -> role, NN)
+  * menu_id : bigint (FK -> menu, NN)
+  * delete_flag : bit(1) (default -> 0, NN)
+  * created_by : bigint (FK -> users)
+  * created_date : datetime (default -> UTC(), NN)
+  * last_updated_by : bigint (FK -> users)
+  * last_updated_date : datetime
+* Create option_source table with below columns:
+  * id : bigint (PK, AI)
+  * mappingName : varchar(50) (NN)
+* Create header_config table with below columns:
+  * id : bigint (PK, AI)
+  * header_name : varchar(100) (NN)
+  * header_type : varchar(100) (NN)
+  * mapping_name : varchar(100) (NN)
+  * mapping_table : varchar(100)
+  * mapping_column : varchar(100)
+  * sortable : bit(1) (default -> 0, NN)
+  * filterable : bit(1) (default -> 0, NN)
+  * option_source_id : bigint (FK -> option_source)
+  * delete_flag : bit(1) (default -> 0, NN)
+  * created_by : bigint (FK -> users)
+  * created_date : datetime (default -> UTC(), NN)
+  * last_updated_by : bigint (FK -> users)
+  * last_updated_date : datetime
 * Create users table with below columns:
   * id : bigint (PK, AI)
   * name : varchar(45) (NN)
