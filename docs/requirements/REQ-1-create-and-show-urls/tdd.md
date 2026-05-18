@@ -20,7 +20,18 @@
   * id : bigint (PK, AI)
   * name : varchar(45) (NN)
 * Insert below menus:
+  * Create Url
   * My Short URLs
+* Create users table with below columns:
+  * id : bigint (PK, AI)
+  * name : varchar(45) (NN)
+  * email : varchar(45) (NN, UQ)
+  * role_id : bigint (FK -> role, NN)
+  * delete_flag : bit(1) (default -> 0, NN)
+  * created_by : bigint (FK -> users)
+  * created_date : datetime (default -> UTC(), NN)
+  * last_updated_by : bigint (FK -> users)
+  * last_updated_date : datetime
 * Create role_menu table with below columns:
   * id : bigint (PK, AI)
   * role_id : bigint (FK -> role, NN)
@@ -33,6 +44,7 @@
 * Create option_source table with below columns:
   * id : bigint (PK, AI)
   * mappingName : varchar(50) (NN)
+* Create required entry in option_source table for urlStatusList optionSource
 * Create header_config table with below columns:
   * id : bigint (PK, AI)
   * header_name : varchar(100) (NN)
@@ -48,16 +60,19 @@
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
-* Create users table with below columns:
+* Insert required entries in header_config table based on below /fetch-urls endpoint's response JSON
+* Create header_mapping table with below columns:
   * id : bigint (PK, AI)
-  * name : varchar(45) (NN)
-  * email : varchar(45) (NN, UQ)
-  * role_id : bigint (FK -> role, NN)
+  * header_config_id : bigint (FK → header_config, NN)
+  * role_menu_id : bigint (FK -> role_menu, NN)
+  * editable : bit(1) (default -> 0, NN)
+  * display_order : decimal(15,2) (NN)
   * delete_flag : bit(1) (default -> 0, NN)
   * created_by : bigint (FK -> users)
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
+* Insert required entries in header_mapping table based on below /fetch-urls endpoint's response JSON 
 * Create url_status table with below columns:
   * id : bigint (PK, AI)
   * name : varchar(50) (NN)
@@ -83,6 +98,65 @@
   * last_updated_date : datetime
 
 ### Backend changes
+
+#### Create Url On Load API
+
+* create new GET endpoint /api/ums/urls/create-url-on-load
+* Request Headers
+
+```shell
+userid : 1
+roleid : 3
+device : web
+```
+
+* Response Payload
+
+```json
+{
+  "data": {
+    "headers" : [
+      {
+        "displayName": "Title",
+        "mappingName": "title",
+        "headerType": "text",
+        "headerMappingId": 2,
+        "editable" : true,
+        "filterable": true,
+        "sortable": true,
+        "optionSource" : null
+      },
+      {
+        "displayName": "Original Url",
+        "mappingName": "originalUrl",
+        "headerType": "text",
+        "headerMappingId": 3,
+        "editable" : true,
+        "filterable": true,
+        "sortable": true,
+        "optionSource" : null
+      },
+      {
+        "displayName": "Slug",
+        "mappingName": "slug",
+        "headerType": "text",
+        "headerMappingId": 4,
+        "editable" : true,
+        "filterable": true,
+        "sortable": true,
+        "optionSource" : null
+      }
+    ]
+  },
+  "message": "Fetched successfully",
+  "code": 200,
+  "status": "SUCCESS"
+}
+```
+
+* Headers should come in same order
+
+#### Create Url API
 
 * create new POST endpoint /api/ums/urls/create-url
 * Note : ? in request JSON property indicates that property is optional
@@ -114,6 +188,8 @@ device : web
   "status": "CREATED"
 }
 ```
+
+#### Fetch Urls API
 
 * create new POST endpoint /api/ums/urls/fetch-urls
 * Request Headers
@@ -225,6 +301,10 @@ device : web
 }
 ```
 
+* Headers should come in same order
+
+#### Update Url API
+
 * create new PATCH endpoint /api/ums/urls/update-url
 * Request Headers
 
@@ -253,4 +333,20 @@ device : web
   "code": 200,
   "status": "SUCCESS"
 }
+```
+
+
+#### Visit Short Url
+
+* e.g : "https://frontend-url/slug"
+* create new GET endpoint /api/ums/urls/visit-url/{slug}
+* This is public API
+* Http status code : 302 Found (Temporary Redirect)
+* Do not use 301 (Moved Permanently) http status code because 
+  browser will cache response, and we will not able track click counts.
+
+* Response Header
+
+```shell
+Location : "https://abhishekmalvadkar.netlify.app/database-exploration-checklist-for-understanding-a-new-domain/"
 ```
