@@ -99,6 +99,33 @@
 
 ### Backend changes
 
+#### Temporary Sign in API
+
+* create new GET endpoint /api/auth/sign-in
+* Response Payload
+
+```json
+{
+  "data": {
+    "metadata": {
+      "urlStatusList": [
+        {
+          "key": 1,
+          "value": "Active"
+        },
+        {
+          "key": 2,
+          "value": "Inactive"
+        }
+      ]
+    }
+  },
+  "message": "Signed in successfully",
+  "code": 200,
+  "status": "SUCCESS"
+}
+```
+
 #### Create Url On Load API
 
 * create new GET endpoint /api/ums/urls/create-url-on-load
@@ -334,7 +361,6 @@ device : web
   "status": "SUCCESS"
 }
 ```
-
 
 #### Visit Short Url
 
