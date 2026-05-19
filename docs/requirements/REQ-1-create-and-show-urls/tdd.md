@@ -41,6 +41,9 @@
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
+* Insert required below entries in role_menu table
+  * Customer role has access of both menus
+  * Admin role has access of both menus
 * Create option_source table with below columns:
   * id : bigint (PK, AI)
   * mappingName : varchar(50) (NN)
@@ -72,7 +75,9 @@
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
-* Insert required entries in header_mapping table based on below /fetch-urls endpoint's response JSON 
+* Insert required entries in header_mapping table based on below things
+  * Using role_menu_id for Customer and Admin from role_menu table
+  * Using header_config_id from header_config table based on /create-url-on-load(For Create Url Menu) and based on /fetch-urls(For My Short Urls) menu response headers
 * Create url_status table with below columns:
   * id : bigint (PK, AI)
   * name : varchar(50) (NN)
@@ -96,6 +101,8 @@
   * created_date : datetime (default -> UTC(), NN)
   * last_updated_by : bigint (FK -> users)
   * last_updated_date : datetime
+* Notes
+  * On insert, it should save UTC time not CURRENT_TIMESTAMP as default
 
 ### Backend changes
 
