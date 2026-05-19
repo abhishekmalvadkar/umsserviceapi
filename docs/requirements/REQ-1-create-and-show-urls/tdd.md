@@ -247,16 +247,6 @@ device : web
   "data": {
     "headers" : [
       {
-        "displayName": "Short Url",
-        "mappingName": "shortUrl",
-        "headerType": "text",
-        "headerMappingId": 1,
-        "editable" : false,
-        "filterable": true,
-        "sortable": true,
-        "optionSource" : null
-      },
-      {
         "displayName": "Title",
         "mappingName": "title",
         "headerType": "text",
