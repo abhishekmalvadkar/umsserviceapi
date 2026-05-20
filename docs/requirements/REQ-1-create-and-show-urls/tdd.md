@@ -115,6 +115,12 @@
 ```json
 {
   "data": {
+    "menus": {
+      "URLs": {
+        "Create URL": {},
+        "My Short URLs": {}
+      }
+    },
     "metadata": {
       "urlStatusList": [
         {
