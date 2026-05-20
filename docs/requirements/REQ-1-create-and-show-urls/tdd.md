@@ -19,6 +19,7 @@
 * Create menu table with below columns:
   * id : bigint (PK, AI)
   * name : varchar(45) (NN)
+  * parent_id : bigint (FK -> menu)
 * Insert below menus:
   * Create Url
   * My Short URLs
@@ -305,12 +306,21 @@ device : web
         "filterable": false,
         "sortable": false,
         "optionSource" : null
+      },
+      {
+        "displayName": "",
+        "mappingName": "",
+        "headerType": "visit",
+        "headerMappingId": 8,
+        "editable" : false,
+        "filterable": false,
+        "sortable": false,
+        "optionSource" : null
       }
     ],
     "data" : [
       {
         "id": 1,
-        "shortUrl" : "https://ourdomain.com/slug",
         "title" : "My Short URL Title",
         "originalUrl": "https://original-url.com",
         "slug" : "DbExploration",

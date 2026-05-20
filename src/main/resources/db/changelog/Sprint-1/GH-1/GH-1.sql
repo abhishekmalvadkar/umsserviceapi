@@ -18,14 +18,19 @@ VALUES (1, 'System', 'Responsible to automate things'),
 --changeset Abhishek Malvadkar:3-create-menu-table
 CREATE TABLE menu (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(45) NOT NULL
+    name VARCHAR(45) NOT NULL,
+    parent_id bigint,
+    CONSTRAINT fk_menu_parent_id
+            FOREIGN KEY (parent_id)
+            REFERENCES menu(id)
 );
 
 
 --changeset Abhishek Malvadkar:4-insert-menu-data
-INSERT INTO menu(id, name)
-VALUES (1, 'Create Url'),
-       (2, 'My Short URLs');
+INSERT INTO menu(id, name, parent_id)
+VALUES (1, 'URLs', null),
+       (2, 'Create URL', 1),
+       (3, 'My Short URLs', 1);
 
 
 --changeset Abhishek Malvadkar:5-create-users-table
@@ -36,7 +41,7 @@ CREATE TABLE users (
     role_id BIGINT NOT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT fk_users_role_id
@@ -62,7 +67,7 @@ CREATE TABLE role_menu (
     menu_id BIGINT NOT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT fk_role_menu_role_id
@@ -105,7 +110,7 @@ CREATE TABLE header_config (
     option_source_id BIGINT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT fk_header_config_option_source_id
@@ -130,15 +135,18 @@ INSERT INTO header_config(
     mapping_column,
     sortable,
     filterable,
-    option_source_id
+    option_source_id,
+    created_by,
+    created_date
 )
 VALUES
-(1, 'Title', 'text', 'title', 'urls', 'title', 1, 1, NULL),
-(2, 'Original Url', 'text', 'originalUrl', 'urls', 'original_url', 1, 1, NULL),
-(3, 'Slug', 'text', 'slug', 'urls', 'slug', 1, 1, NULL),
-(4, 'Status', 'dropdown', 'urlStatusId', 'urls', 'url_status_id', 1, 1, 1),
-(5, 'Created On', 'date', 'createdDate', 'urls', 'created_date', 1, 0, NULL),
-(6, '', 'copy', '', NULL, NULL, 0, 0, NULL);
+(1, 'Title', 'text', 'title', 'urls', 'title', 1, 1, NULL, 1, UTC_TIMESTAMP()),
+(2, 'Original Url', 'text', 'originalUrl', 'urls', 'original_url', 1, 1, NULL, 1, UTC_TIMESTAMP()),
+(3, 'Slug', 'text', 'slug', 'urls', 'slug', 1, 1, NULL, 1, UTC_TIMESTAMP()),
+(4, 'Status', 'dropdown', 'urlStatusId', 'urls', 'url_status_id', 1, 1, 1, 1, UTC_TIMESTAMP()),
+(5, 'Created On', 'date', 'createdDate', 'urls', 'created_date', 1, 0, NULL, 1, UTC_TIMESTAMP()),
+(6, '', 'copy', '', NULL, NULL, 0, 0, NULL, 1, UTC_TIMESTAMP()),
+(7, '', 'visit', '', NULL, NULL, 0, 0, NULL, 1, UTC_TIMESTAMP());
 
 
 --changeset Abhishek Malvadkar:11-create-header-mapping-table
@@ -150,7 +158,7 @@ CREATE TABLE header_mapping (
     display_order DECIMAL(15,2) NOT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT fk_header_mapping_header_config_id
@@ -169,50 +177,52 @@ CREATE TABLE header_mapping (
 
 --changeset Abhishek Malvadkar:16-insert-role-menu-and-header-mappings
 INSERT INTO role_menu(role_id, menu_id, created_by, created_date)
-VALUES (3, 1, 1, UTC_TIMESTAMP());
+VALUES (3, 2, 1, UTC_TIMESTAMP());
 
 set @create_url_menu_customer_role_menu_id = last_insert_id();
 
 INSERT INTO header_mapping(header_config_id, role_menu_id, editable, display_order, created_by, created_date) VALUES
-(1, @create_url_menu_customer_role_menu_id,1,1 1, UTC_TIMESTAMP()),
-(2, @create_url_menu_customer_role_menu_id,1,2 1, UTC_TIMESTAMP()),
-(3, @create_url_menu_customer_role_menu_id,1,3 1, UTC_TIMESTAMP());
+(1, @create_url_menu_customer_role_menu_id,1,1, 1, UTC_TIMESTAMP()),
+(2, @create_url_menu_customer_role_menu_id,1,2, 1, UTC_TIMESTAMP()),
+(3, @create_url_menu_customer_role_menu_id,1,3, 1, UTC_TIMESTAMP());
 
 INSERT INTO role_menu(role_id, menu_id, created_by, created_date)
-VALUES (3, 2, 1, UTC_TIMESTAMP());
+VALUES (3, 3, 1, UTC_TIMESTAMP());
 
 set @my_short_urls_menu_customer_role_menu_id = last_insert_id();
 
 INSERT INTO header_mapping(header_config_id, role_menu_id, editable, display_order, created_by, created_date) VALUES
-(1, @my_short_urls_menu_customer_role_menu_id,1,1 1, UTC_TIMESTAMP()),
-(2, @my_short_urls_menu_customer_role_menu_id,1,2 1, UTC_TIMESTAMP()),
-(3, @my_short_urls_menu_customer_role_menu_id,1,3 1, UTC_TIMESTAMP());
-(4, @my_short_urls_menu_customer_role_menu_id,1,4 1, UTC_TIMESTAMP());
-(5, @my_short_urls_menu_customer_role_menu_id,1,5 1, UTC_TIMESTAMP());
-(6, @my_short_urls_menu_customer_role_menu_id,1,6 1, UTC_TIMESTAMP());
-
-INSERT INTO role_menu(role_id, menu_id, created_by, created_date)
-VALUES (2, 1, 1, UTC_TIMESTAMP());
-
-set @create_url_menu_admin_role_menu_id = last_insert_id();
-
-INSERT INTO header_mapping(header_config_id, role_menu_id, editable, display_order, created_by, created_date) VALUES
-(1, @create_url_menu_admin_role_menu_id,1,1 1, UTC_TIMESTAMP()),
-(2, @create_url_menu_admin_role_menu_id,1,2 1, UTC_TIMESTAMP()),
-(3, @create_url_menu_admin_role_menu_id,1,3 1, UTC_TIMESTAMP());
+(1, @my_short_urls_menu_customer_role_menu_id,1,1, 1, UTC_TIMESTAMP()),
+(2, @my_short_urls_menu_customer_role_menu_id,1,2, 1, UTC_TIMESTAMP()),
+(3, @my_short_urls_menu_customer_role_menu_id,1,3, 1, UTC_TIMESTAMP()),
+(4, @my_short_urls_menu_customer_role_menu_id,1,4, 1, UTC_TIMESTAMP()),
+(5, @my_short_urls_menu_customer_role_menu_id,1,5, 1, UTC_TIMESTAMP()),
+(6, @my_short_urls_menu_customer_role_menu_id,1,6, 1, UTC_TIMESTAMP()),
+(7, @my_short_urls_menu_customer_role_menu_id,1,7, 1, UTC_TIMESTAMP());
 
 INSERT INTO role_menu(role_id, menu_id, created_by, created_date)
 VALUES (2, 2, 1, UTC_TIMESTAMP());
 
+set @create_url_menu_admin_role_menu_id = last_insert_id();
+
+INSERT INTO header_mapping(header_config_id, role_menu_id, editable, display_order, created_by, created_date) VALUES
+(1, @create_url_menu_admin_role_menu_id,1,1, 1, UTC_TIMESTAMP()),
+(2, @create_url_menu_admin_role_menu_id,1,2, 1, UTC_TIMESTAMP()),
+(3, @create_url_menu_admin_role_menu_id,1,3, 1, UTC_TIMESTAMP());
+
+INSERT INTO role_menu(role_id, menu_id, created_by, created_date)
+VALUES (2, 3, 1, UTC_TIMESTAMP());
+
 set @my_short_urls_menu_admin_role_menu_id = last_insert_id();
 
 INSERT INTO header_mapping(header_config_id, role_menu_id, editable, display_order, created_by, created_date) VALUES
-(1, @my_short_urls_menu_admin_role_menu_id,1,1 1, UTC_TIMESTAMP()),
-(2, @my_short_urls_menu_admin_role_menu_id,1,2 1, UTC_TIMESTAMP()),
-(3, @my_short_urls_menu_admin_role_menu_id,1,3 1, UTC_TIMESTAMP());
-(4, @my_short_urls_menu_admin_role_menu_id,1,4 1, UTC_TIMESTAMP());
-(5, @my_short_urls_menu_admin_role_menu_id,1,5 1, UTC_TIMESTAMP());
-(6, @my_short_urls_menu_admin_role_menu_id,1,6 1, UTC_TIMESTAMP());
+(1, @my_short_urls_menu_admin_role_menu_id,1,1, 1, UTC_TIMESTAMP()),
+(2, @my_short_urls_menu_admin_role_menu_id,1,2, 1, UTC_TIMESTAMP()),
+(3, @my_short_urls_menu_admin_role_menu_id,1,3, 1, UTC_TIMESTAMP()),
+(4, @my_short_urls_menu_admin_role_menu_id,1,4, 1, UTC_TIMESTAMP()),
+(5, @my_short_urls_menu_admin_role_menu_id,1,5, 1, UTC_TIMESTAMP()),
+(6, @my_short_urls_menu_admin_role_menu_id,1,6, 1, UTC_TIMESTAMP()),
+(7, @my_short_urls_menu_admin_role_menu_id,1,7, 1, UTC_TIMESTAMP());
 
 
 --changeset Abhishek Malvadkar:12-create-url-status-table
@@ -222,7 +232,7 @@ CREATE TABLE url_status (
     description VARCHAR(255) NOT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NOT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT fk_url_status_created_by
@@ -239,11 +249,12 @@ INSERT INTO url_status(
     id,
     name,
     description,
-    created_by
+    created_by,
+    created_date
 )
 VALUES
-(1, 'Active', 'Represents active urls', 1),
-(2, 'Inactive', 'Represents inactive urls', 1);
+(1, 'Active', 'Represents active urls', 1, UTC_TIMESTAMP()),
+(2, 'Inactive', 'Represents inactive urls', 1, UTC_TIMESTAMP());
 
 
 --changeset Abhishek Malvadkar:14-create-urls-table
@@ -255,7 +266,7 @@ CREATE TABLE urls (
     url_status_id BIGINT NOT NULL,
     delete_flag BIT(1) NOT NULL DEFAULT 0,
     created_by BIGINT NOT NULL,
-    created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_date DATETIME NOT NULL,
     last_updated_by BIGINT NULL,
     last_updated_date DATETIME NULL,
     CONSTRAINT uq_urls_slug UNIQUE (slug),
