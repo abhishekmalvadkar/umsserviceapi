@@ -1,0 +1,2 @@
+### Sign in API
+GET http://localhost:9091/api/auth/sign-in
