@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.amalvadkar.ums.common.enums.SignInApiMetadataMappingNameEnum.urlStatusList;
+import static com.amalvadkar.ums.common.enums.UmsResponseMessageEnum.SIGNED_IN_SUCCESSFULLY;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,12 +21,12 @@ public class UserService {
     public CustomResponse signIn() {
         SignInResponse signInResponse = new SignInResponse();
         signInResponse.setMetadata(prepareMetadata());
-        return CustomResponse.success(signInResponse, "Signed in successfully");
+        return CustomResponse.success(signInResponse, SIGNED_IN_SUCCESSFULLY);
     }
 
     private Map<String, Object> prepareMetadata() {
         Map<String, Object> metadata = new HashMap<>();
-        metadata.put("urlStatusList", urlStatusRepo.findUrlStatusList());
+        metadata.put(urlStatusList.name(), urlStatusRepo.findUrlStatusList());
         return metadata;
     }
 }

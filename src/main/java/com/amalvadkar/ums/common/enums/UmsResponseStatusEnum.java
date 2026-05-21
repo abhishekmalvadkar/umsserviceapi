@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
-public enum UmsHttpStatusEnum {
+public enum UmsResponseStatusEnum {
     SUCCESS(OK.value());
 
     private final int code;
