@@ -1,8 +1,12 @@
 package com.amalvadkar.ums.common.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
+@Getter
+@Setter
 public class AbstractIdEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
