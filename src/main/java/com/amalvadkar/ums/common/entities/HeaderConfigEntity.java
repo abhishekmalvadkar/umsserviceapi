@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import static java.util.Objects.isNull;
+
 @Getter
 @Setter
 @Entity
@@ -35,5 +37,9 @@ public class HeaderConfigEntity extends AbstractAuditEntity {
     @JoinColumn(name = "option_source_id")
     private OptionSourceEntity optionSource;
 
+    public String optionSourceMappingName(){
+        if (isNull(optionSource)) return null;
+        return optionSource.getMappingName();
+    }
 
 }

@@ -13,7 +13,7 @@ public interface HeaderMappingRepo extends JpaRepository<HeaderMappingEntity, Lo
     select hm from HeaderMappingEntity hm
     join fetch hm.headerConfig hc
     join fetch hm.roleMenu rm
-    join fetch hc.optionSource
+    left join fetch hc.optionSource
     where rm.role.id = :roleId
     and rm.menu.id = :menuId
     and hm.deleteFlag = false

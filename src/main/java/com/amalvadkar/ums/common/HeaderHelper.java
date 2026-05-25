@@ -2,7 +2,6 @@ package com.amalvadkar.ums.common;
 
 import com.amalvadkar.ums.common.entities.HeaderConfigEntity;
 import com.amalvadkar.ums.common.entities.HeaderMappingEntity;
-import com.amalvadkar.ums.common.entities.OptionSourceEntity;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.HeaderResponse;
 import com.amalvadkar.ums.common.repositories.HeaderMappingRepo;
@@ -29,7 +28,6 @@ public class HeaderHelper {
     private HeaderResponse toHeaderResponse(HeaderMappingEntity headerMappingEntity) {
         HeaderResponse headerResponse = new HeaderResponse();
         HeaderConfigEntity headerConfig = headerMappingEntity.getHeaderConfig();
-        OptionSourceEntity optionSource = headerConfig.getOptionSource();
         headerResponse.setId(headerConfig.getId());
         headerResponse.setDisplayName(headerConfig.getHeaderName());
         headerResponse.setMappingName(headerConfig.getMappingName());
@@ -38,7 +36,7 @@ public class HeaderHelper {
         headerResponse.setEditable(headerMappingEntity.isEditable());
         headerResponse.setFilterable(headerConfig.isFilterable());
         headerResponse.setSortable(headerConfig.isSortable());
-        headerResponse.setOptionSource(optionSource.getMappingName());
+        headerResponse.setOptionSource(headerConfig.optionSourceMappingName());
         return headerResponse;
     }
 

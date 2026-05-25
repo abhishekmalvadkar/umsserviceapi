@@ -1,0 +1,5 @@
+### Create url on load API
+GET http://localhost:9091/api/ums/urls/create-url-on-load
+userid: 1
+roleid: 3
+device: web
