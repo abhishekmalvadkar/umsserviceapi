@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserRestController {
 
+    private static final String ENDPOINT_SIGN_IN = "/sign-in";
+
     private final UserService userService;
 
-    @GetMapping("/sign-in")
+    @GetMapping(ENDPOINT_SIGN_IN)
     public ResponseEntity<CustomResponse> signIn(){
         return ResponseEntity.ok(userService.signIn());
     }
