@@ -1,5 +1,6 @@
 package com.amalvadkar.ums.url.controllers.rest;
 
+import com.amalvadkar.ums.common.constants.HeaderConstant;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.CustomResponse;
 import com.amalvadkar.ums.url.services.CreateUrlOnLoadService;
@@ -15,15 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UrlRestController {
 
+    private static final String ENDPOINT_CREATE_URL_ON_LOAD = "/create-url-on-load";
+
     private final CreateUrlOnLoadService createUrlOnLoadService;
 
-    @GetMapping("/create-url-on-load")
+    @GetMapping(ENDPOINT_CREATE_URL_ON_LOAD)
     public ResponseEntity<CustomResponse> createUrlOnLoad(
-            @RequestHeader("userid") Long userId,
-            @RequestHeader("roleid") Long roleId,
-            @RequestHeader("device") String device
+            @RequestHeader(HeaderConstant.USER_ID) Long userId,
+            @RequestHeader(HeaderConstant.ROLE_ID) Long roleId,
+            @RequestHeader(HeaderConstant.DEVICE) String device
     ) {
-        LoggedInUser loggedInUser = new LoggedInUser(userId, roleId, device);
+        LoggedInUser loggedInUser = LoggedInUser.from(userId, roleId, device);
         return ResponseEntity.ok(createUrlOnLoadService.createUrlOnLoad(loggedInUser));
     }
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.amalvadkar.ums.common.enums.MenuEnum.CREATE_URL;
 import static com.amalvadkar.ums.common.enums.UmsResponseMessageEnum.FETCHED_SUCCESSFULLY;
 
 @Service
@@ -21,7 +22,7 @@ public class CreateUrlOnLoadService {
     private final HeaderHelper headerHelper;
 
     public CustomResponse createUrlOnLoad(LoggedInUser loggedInUser) {
-        List<HeaderResponse> headers = headerHelper.findHeaders(loggedInUser, 2L);
+        List<HeaderResponse> headers = headerHelper.findHeaders(loggedInUser, CREATE_URL.id());
         return CustomResponse.success(CreateUrlOnLoadResponse.from(headers), FETCHED_SUCCESSFULLY);
     }
 }
