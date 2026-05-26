@@ -1,7 +1,7 @@
 package com.amalvadkar.ums.common.helpers;
 
-import com.amalvadkar.ums.common.entities.HeaderConfigEntity;
 import com.amalvadkar.ums.common.entities.HeaderMappingEntity;
+import com.amalvadkar.ums.common.mappers.HeaderMapper;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.HeaderResponse;
 import com.amalvadkar.ums.common.repositories.HeaderMappingRepo;
@@ -19,28 +19,12 @@ import java.util.List;
 public class HeaderHelper {
 
     private final HeaderMappingRepo headerMappingRepo;
+    private final HeaderMapper headerMapper;
 
     public List<HeaderResponse> findHeaders(LoggedInUser loggedInUser, Long menuId){
         List<HeaderMappingEntity> headerMappings = headerMappingRepo.findHeaderMappings(loggedInUser.roleId(), menuId);
         log.debug("Headers size :: {} for role id :: {} and menu id :: {}", headerMappings.size(), loggedInUser.roleId(), menuId);
-        return headerMappings.stream()
-                .map(this::toHeaderResponse)
-                .toList();
-    }
-
-    private HeaderResponse toHeaderResponse(HeaderMappingEntity headerMappingEntity) {
-        HeaderResponse headerResponse = new HeaderResponse();
-        HeaderConfigEntity headerConfig = headerMappingEntity.getHeaderConfig();
-        headerResponse.setId(headerConfig.getId());
-        headerResponse.setDisplayName(headerConfig.getHeaderName());
-        headerResponse.setMappingName(headerConfig.getMappingName());
-        headerResponse.setHeaderType(headerConfig.getHeaderType());
-        headerResponse.setHeaderMappingId(headerMappingEntity.getId());
-        headerResponse.setEditable(headerMappingEntity.isEditable());
-        headerResponse.setFilterable(headerConfig.isFilterable());
-        headerResponse.setSortable(headerConfig.isSortable());
-        headerResponse.setOptionSource(headerConfig.optionSourceMappingName());
-        return headerResponse;
+        return headerMapper.toHeaderResponseList(headerMappings);
     }
 
 }
