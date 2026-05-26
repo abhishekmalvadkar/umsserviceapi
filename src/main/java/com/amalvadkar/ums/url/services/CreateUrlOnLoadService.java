@@ -1,6 +1,7 @@
 package com.amalvadkar.ums.url.services;
 
-import com.amalvadkar.ums.common.HeaderHelper;
+
+import com.amalvadkar.ums.common.helpers.HeaderHelper;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.CustomResponse;
 import com.amalvadkar.ums.common.model.response.HeaderResponse;

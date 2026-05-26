@@ -1,4 +1,4 @@
-package com.amalvadkar.ums.common;
+package com.amalvadkar.ums.common.helpers;
 
 import com.amalvadkar.ums.common.entities.HeaderConfigEntity;
 import com.amalvadkar.ums.common.entities.HeaderMappingEntity;
