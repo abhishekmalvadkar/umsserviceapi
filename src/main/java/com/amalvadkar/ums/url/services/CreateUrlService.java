@@ -44,13 +44,17 @@ public class CreateUrlService {
         urlEntity.setUrlStatus(urlStatusRepo.getReferenceById(ACTIVE.id()));
         urlEntity.setCreatedBy(userRepo.getReferenceById(loggedInUser.userId()));
         urlEntity.setSlug(prepareSlug(createUrlRequest));
-        return urlRepo.save(urlEntity);
+        UrlEntity savedUrlEntity = urlRepo.save(urlEntity);
+        log.debug("Created new url with id : {} and slug :: {}", savedUrlEntity.getId(), savedUrlEntity.getSlug());
+        return savedUrlEntity;
     }
 
     private String prepareSlug(CreateUrlRequest createUrlRequest) {
         if (createUrlRequest.hasSlug()) {
+            log.debug("User has given slug so using that one");
             return createUrlRequest.getSlug();
         }
+        log.debug("User has not given slug so generating new one");
         return slugGenerator.generate();
     }
 }
