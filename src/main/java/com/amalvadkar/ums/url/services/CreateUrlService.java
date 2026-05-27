@@ -45,7 +45,7 @@ public class CreateUrlService {
         urlEntity.setCreatedBy(userRepo.getReferenceById(loggedInUser.userId()));
         urlEntity.setSlug(prepareSlug(createUrlRequest));
         UrlEntity savedUrlEntity = urlRepo.save(urlEntity);
-        log.debug("Created new url with id : {} and slug :: {}", savedUrlEntity.getId(), savedUrlEntity.getSlug());
+        log.debug("Created new url with id :: {} and slug :: {}", savedUrlEntity.getId(), savedUrlEntity.getSlug());
         return savedUrlEntity;
     }
 
