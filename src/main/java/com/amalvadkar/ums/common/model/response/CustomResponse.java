@@ -4,6 +4,7 @@ import com.amalvadkar.ums.common.enums.UmsResponseMessageEnum;
 import lombok.Builder;
 import lombok.Data;
 
+import static com.amalvadkar.ums.common.enums.UmsResponseStatusEnum.CREATED;
 import static com.amalvadkar.ums.common.enums.UmsResponseStatusEnum.SUCCESS;
 
 @Data
@@ -20,6 +21,15 @@ public class CustomResponse {
                 .message(message.value())
                 .code(SUCCESS.code())
                 .status(SUCCESS.name())
+                .build();
+    }
+
+    public static CustomResponse created(Object data, UmsResponseMessageEnum message){
+        return CustomResponse.builder()
+                .data(data)
+                .message(message.value())
+                .code(CREATED.code())
+                .status(CREATED.name())
                 .build();
     }
 }

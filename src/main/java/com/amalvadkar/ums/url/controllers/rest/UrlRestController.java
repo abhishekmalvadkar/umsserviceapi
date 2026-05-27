@@ -3,13 +3,13 @@ package com.amalvadkar.ums.url.controllers.rest;
 import com.amalvadkar.ums.common.constants.HeaderConstant;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.CustomResponse;
+import com.amalvadkar.ums.url.models.request.CreateUrlRequest;
 import com.amalvadkar.ums.url.services.CreateUrlOnLoadService;
+import com.amalvadkar.ums.url.services.CreateUrlService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/ums/urls")
@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UrlRestController {
 
     private static final String ENDPOINT_CREATE_URL_ON_LOAD = "/create-url-on-load";
+    private static final String ENDPOINT_CREATE_URL = "/create-url";
 
     private final CreateUrlOnLoadService createUrlOnLoadService;
+    private final CreateUrlService createUrlService;
 
     @GetMapping(ENDPOINT_CREATE_URL_ON_LOAD)
     public ResponseEntity<CustomResponse> createUrlOnLoad(
@@ -28,6 +30,17 @@ public class UrlRestController {
     ) {
         LoggedInUser loggedInUser = LoggedInUser.from(userId, roleId, device);
         return ResponseEntity.ok(createUrlOnLoadService.createUrlOnLoad(loggedInUser));
+    }
+
+    @PostMapping(ENDPOINT_CREATE_URL)
+    public ResponseEntity<CustomResponse> createUrl(
+            @RequestHeader(HeaderConstant.USER_ID) Long userId,
+            @RequestHeader(HeaderConstant.ROLE_ID) Long roleId,
+            @RequestHeader(HeaderConstant.DEVICE) String device,
+            @RequestBody @Valid CreateUrlRequest createUrlRequest
+    ) {
+        LoggedInUser loggedInUser = LoggedInUser.from(userId, roleId, device);
+        return ResponseEntity.ok(createUrlService.createUrl(createUrlRequest, loggedInUser));
     }
 
 }
