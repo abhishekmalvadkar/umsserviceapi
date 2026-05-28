@@ -16,7 +16,7 @@ public class AbstractAuditEntity extends AbstractDeleteFlagEntity {
     private UserEntity createdBy;
 
     @Column(name = "created_date", nullable = false)
-    private Instant createdDate;
+    private Instant createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "last_updated_by")
@@ -27,6 +27,6 @@ public class AbstractAuditEntity extends AbstractDeleteFlagEntity {
 
     @PrePersist
     public void prePersist() {
-        this.createdDate = Instant.now();
+        this.createdOn = Instant.now();
     }
 }
