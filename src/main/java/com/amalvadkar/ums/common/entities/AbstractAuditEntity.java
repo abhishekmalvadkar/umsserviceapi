@@ -1,10 +1,14 @@
 package com.amalvadkar.ums.common.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 @MappedSuperclass
+@Setter
+@Getter
 public class AbstractAuditEntity extends AbstractDeleteFlagEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -12,13 +16,17 @@ public class AbstractAuditEntity extends AbstractDeleteFlagEntity {
     private UserEntity createdBy;
 
     @Column(name = "created_date", nullable = false)
-    private ZonedDateTime createdDate;
+    private Instant createdOn;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "last_updated_by")
     private UserEntity lastUpdatedBy;
 
     @Column(name = "last_updated_date")
-    private ZonedDateTime lastUpdatedDate;
+    private Instant lastUpdatedDate;
 
+    @PrePersist
+    public void prePersist() {
+        this.createdOn = Instant.now();
+    }
 }

@@ -1,12 +1,15 @@
 package com.amalvadkar.ums.common.enums;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import static org.springframework.http.HttpStatus.OK;
 
 @RequiredArgsConstructor
 public enum UmsResponseStatusEnum {
-    SUCCESS(OK.value());
+    SUCCESS(OK.value()),
+    CREATED(HttpStatus.CREATED.value()),
+    BAD_REQUEST(HttpStatus.BAD_REQUEST.value());
 
     private final int code;
 

@@ -1,0 +1,12 @@
+### Create url API
+POST http://localhost:9091/api/ums/urls/create-url
+userid: 1
+roleid: 3
+device: web
+Content-Type: application/json
+
+{
+  "title" : "Database Exploration Checklist",
+  "originalUrl" : "https://abhishekmalvadkar.netlify.app/database-exploration-checklist-for-understanding-a-new-domain/",
+  "slug" : "DbExploration"
+}
