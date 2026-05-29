@@ -16,8 +16,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<CustomResponse> handleValidationException(MethodArgumentNotValidException ex) {
+        logException(ex);
         return ResponseEntity.badRequest()
                 .body(CustomResponse.badRequest(extractValidationErrorMessages(ex)));
+    }
+
+    private static void logException(Throwable ex) {
+        log.error("Exception occurred :: ", ex);
     }
 
     private static List<String> extractValidationErrorMessages(MethodArgumentNotValidException ex) {
