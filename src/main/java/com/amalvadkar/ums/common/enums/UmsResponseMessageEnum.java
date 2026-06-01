@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 public enum UmsResponseMessageEnum {
     SIGNED_IN_SUCCESSFULLY("Signed in successfully"),
     FETCHED_SUCCESSFULLY("Fetched successfully"),
+    CHECKED_SUCCESSFULLY("Checked successfully"),
     CREATED_SUCCESSFULLY("Created successfully");
 
     private final String value;
