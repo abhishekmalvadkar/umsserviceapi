@@ -4,6 +4,7 @@ import com.amalvadkar.ums.common.constants.HeaderConstant;
 import com.amalvadkar.ums.common.model.dto.LoggedInUser;
 import com.amalvadkar.ums.common.model.response.CustomResponse;
 import com.amalvadkar.ums.url.models.request.CreateUrlRequest;
+import com.amalvadkar.ums.url.services.CheckSlugService;
 import com.amalvadkar.ums.url.services.CreateUrlOnLoadService;
 import com.amalvadkar.ums.url.services.CreateUrlService;
 import jakarta.validation.Valid;
@@ -18,9 +19,11 @@ public class UrlRestController {
 
     private static final String ENDPOINT_CREATE_URL_ON_LOAD = "/create-url-on-load";
     private static final String ENDPOINT_CREATE_URL = "/create-url";
+    private static final String ENDPOINT_CHECK_SLUG = "/check-slug";
 
     private final CreateUrlOnLoadService createUrlOnLoadService;
     private final CreateUrlService createUrlService;
+    private final CheckSlugService checkSlugService;
 
     @GetMapping(ENDPOINT_CREATE_URL_ON_LOAD)
     public ResponseEntity<CustomResponse> createUrlOnLoad(
@@ -41,6 +44,11 @@ public class UrlRestController {
     ) {
         LoggedInUser loggedInUser = LoggedInUser.from(userId, roleId, device);
         return ResponseEntity.ok(createUrlService.createUrl(createUrlRequest, loggedInUser));
+    }
+
+    @GetMapping(ENDPOINT_CHECK_SLUG)
+    public ResponseEntity<CustomResponse> checkSlug(@RequestParam("slug") String slug) {
+        return ResponseEntity.ok(checkSlugService.check(slug));
     }
 
 }
