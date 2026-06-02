@@ -25,6 +25,7 @@ public class FetchUrlsDataPreparer {
 
     public List<FetchUrlsDataResponse> prepare(FetchUrlsRequest fetchUrlsRequest, LoggedInUser loggedInUser) {
         List<UrlEntity> urlEntities = urlRepo.findAll(UrlSpecification.byFilter(fetchUrlsRequest, loggedInUser));
+        log.debug("Total URLs :: {}", urlEntities.size());
         return urlMapper.toFetchUrlDataResponseList(urlEntities);
     }
 }

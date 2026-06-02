@@ -7,7 +7,6 @@ import com.amalvadkar.ums.url.models.request.FetchUrlsRequest;
 import com.amalvadkar.ums.url.models.response.FetchUrlsResponse;
 import com.amalvadkar.ums.url.preparer.FetchUrlsDataPreparer;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import static com.amalvadkar.ums.common.enums.UmsResponseMessageEnum.FETCHED_SUC
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Slf4j
 public class FetchUrlsService {
 
     private final HeaderHelper headerHelper;
