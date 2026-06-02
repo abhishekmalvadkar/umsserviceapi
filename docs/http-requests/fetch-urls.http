@@ -1,0 +1,10 @@
+### Fetch urls API
+POST http://localhost:9091/api/ums/urls/fetch-urls
+userid: 1
+roleid: 3
+device: web
+Content-Type: application/json
+
+{
+    "urlStatusId" : 1
+}

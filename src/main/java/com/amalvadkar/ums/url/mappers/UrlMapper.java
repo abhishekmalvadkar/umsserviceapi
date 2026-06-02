@@ -2,8 +2,11 @@ package com.amalvadkar.ums.url.mappers;
 
 import com.amalvadkar.ums.url.entities.UrlEntity;
 import com.amalvadkar.ums.url.models.response.CreateUrlResponse;
+import com.amalvadkar.ums.url.models.response.FetchUrlsDataResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
@@ -13,4 +16,12 @@ public interface UrlMapper {
     @Mapping(source = "urlStatus.id", target = "urlStatusId")
     @Mapping(source = "createdBy.id", target = "createdByUserId")
     CreateUrlResponse toCreateUrlResponse(UrlEntity entity);
+
+
+    @Mapping(source = "urlStatus.id", target = "urlStatusId")
+    @Mapping(source = "urlStatus.name", target = "urlStatusName")
+    @Mapping(source = "createdOn", target = "createdDate")
+    FetchUrlsDataResponse toFetchUrlDataResponse(UrlEntity entity);
+
+    List<FetchUrlsDataResponse> toFetchUrlDataResponseList(List<UrlEntity> entities);
 }
