@@ -16,6 +16,7 @@ public class UrlSpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             predicates.add(cb.equal(root.get("createdBy").get("id"),loggedInUser.userId()));
+            predicates.add(cb.isFalse(root.get("deleteFlag")));
 
             if (request.hasUrlStatusId()) {
                 predicates.add(cb.equal(root.get("urlStatus").get("id"),request.getUrlStatusId()));
