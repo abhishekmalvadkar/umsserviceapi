@@ -22,15 +22,15 @@ public class VisitUrlController {
     @GetMapping(ENDPOINT_VISIT_URL)
     public String visitUrl(@PathVariable String slug, Model model) {
         VisitUrlResponse visitUrlResponse = visitUrlService.visitUrl(slug);
-        return switch (visitUrlResponse.urlStatusEnum()) {
+        return switch (visitUrlResponse.slugStatus()) {
             case VALID_SLUG -> forValidSlug(visitUrlResponse, slug);
             case UNKNOWN_SLUG, INACTIVE_SLUG -> forNotValidSlug(visitUrlResponse, model, slug);
         };
     }
 
     private static String forNotValidSlug(VisitUrlResponse visitUrlResponse, Model model, String slug) {
-        log.debug("Slug {} is not valid, reason :: {}", slug, visitUrlResponse.urlStatusEnum().message());
-        model.addAttribute("message", visitUrlResponse.urlStatusEnum().message());
+        log.debug("Slug {} is not valid, reason :: {}", slug, visitUrlResponse.slugStatus().message());
+        model.addAttribute("message", visitUrlResponse.slugStatus().message());
         return "visit-url-error";
     }
 
