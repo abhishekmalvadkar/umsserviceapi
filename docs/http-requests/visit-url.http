@@ -1,0 +1,2 @@
+### Visit Url API
+GET http://localhost:9091/api/ums/urls/visit-url/DbExploration
