@@ -41,7 +41,7 @@ public class CreateUrlService {
         UrlEntity urlEntity = new UrlEntity();
         urlEntity.setTitle(createUrlRequest.getTitle());
         urlEntity.setOriginalUrl(createUrlRequest.getOriginalUrl());
-        urlEntity.setUrlStatus(urlStatusRepo.getReferenceById(ACTIVE.id()));
+        urlEntity.setUrlStatusId(ACTIVE.id());
         urlEntity.setCreatedBy(userRepo.getReferenceById(loggedInUser.userId()));
         urlEntity.setSlug(prepareSlug(createUrlRequest));
         UrlEntity savedUrlEntity = urlRepo.save(urlEntity);

@@ -66,7 +66,7 @@ public class UrlRestController {
         return ResponseEntity.ok(fetchUrlsService.fetchUrls(fetchUrlsRequest, loggedInUser));
     }
 
-    @GetMapping(ENDPOINT_UPDATE_URL)
+    @PatchMapping(ENDPOINT_UPDATE_URL)
     public ResponseEntity<CustomResponse> updateUrl(
             @RequestHeader(HeaderConstant.USER_ID) Long userId,
             @RequestHeader(HeaderConstant.ROLE_ID) Long roleId,
