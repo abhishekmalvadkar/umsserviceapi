@@ -27,10 +27,15 @@ public interface HeaderMappingRepo extends JpaRepository<HeaderMappingEntity, Lo
             @Param("menuId") Long menuId
     );
 
-    Optional<HeaderMappingEntity> findByIdAndDeleteFlagIsFalse(Long id);
-
-    default HeaderMappingEntity findByIdOrThrow(Long id){
-        return findByIdAndDeleteFlagIsFalse(id)
-                .orElseThrow(() -> new RuntimeException("Header mapping not found"));
-    }
+    @Query("""
+    select hm from HeaderMappingEntity hm
+    join hm.roleMenu rm
+    where hm.headerConfig.id = :headerConfigId
+    and rm.role.id = :roleId
+    and rm.menu.id = :menuId
+    and hm.deleteFlag = false
+    """)
+    Optional<HeaderMappingEntity> findHeaderMappingBy(@Param("headerConfigId") Long headerConfigId,
+                                                      @Param("menuId") Long menuId,
+                                                      @Param("roleId") Long roleId);
 }

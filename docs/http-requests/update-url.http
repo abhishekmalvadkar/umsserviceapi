@@ -6,7 +6,7 @@ device: web
 Content-Type: application/json
 
 {
-  "headerMappingId": 7,
-  "value": "2",
+  "headerConfigId": 20,
+  "value": "Database Exploration Checklist Updated 6",
   "recordId": 1
 }

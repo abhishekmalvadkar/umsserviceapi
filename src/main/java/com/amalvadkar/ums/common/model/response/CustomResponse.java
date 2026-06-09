@@ -49,4 +49,13 @@ public class CustomResponse {
                 .errors(errorMessages)
                 .build();
     }
+
+    public static CustomResponse permissionDenied(String errorMessages) {
+        return CustomResponse.builder()
+                .code(PERMISSION_DENIED.code())
+                .success(false)
+                .status(PERMISSION_DENIED.name())
+                .errors(List.of(errorMessages))
+                .build();
+    }
 }
