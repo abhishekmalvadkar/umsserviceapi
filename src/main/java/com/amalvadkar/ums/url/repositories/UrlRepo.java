@@ -1,5 +1,6 @@
 package com.amalvadkar.ums.url.repositories;
 
+import com.amalvadkar.ums.common.exceptions.UmsException;
 import com.amalvadkar.ums.url.entities.UrlEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -23,5 +24,12 @@ public interface UrlRepo extends JpaRepository<UrlEntity, Long>, JpaSpecificatio
 
     default Optional<UrlEntity> findBySlug(String slug){
         return findBySlugAndDeleteFlagIsFalse(slug);
+    }
+
+    Optional<UrlEntity> findByIdAndDeleteFlagIsFalse(Long id);
+
+    default UrlEntity findByIdOrThrow(Long id){
+        return findByIdAndDeleteFlagIsFalse(id)
+                .orElseThrow(() -> new UmsException("url not found"));
     }
 }
